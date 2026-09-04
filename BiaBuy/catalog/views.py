@@ -7,4 +7,4 @@ def index(request):
     return HttpResponse(output)
 
 def product(request, item_name):
-    return HttpResponse("Product: %s\n Description: %s\n Price: %s" % item_name, item_desc)
+    return HttpResponse("Product: %s" % item_name)
