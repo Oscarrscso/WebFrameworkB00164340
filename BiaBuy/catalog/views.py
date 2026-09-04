@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Item
 
 def catalog_page_sorted(request):
-    sorted_catalog = Item.objects.order_by("-item_price")
+    sorted_catalog = Item.objects.order_by("item_name")
     context = {"sorted_catalog": sorted_catalog}
     return render(request, "catalog/index.html", context)
 
