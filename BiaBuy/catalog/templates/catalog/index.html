@@ -1,0 +1,11 @@
+{% if sorted_catalog %}
+<h1>BiaBuy.ie</h1>
+    <h2>Products:</h2>
+    <ul>
+    {% for item in sorted_catalog %}
+        <li><a href="/catalog/{{ item.item_name }}/">{{ item.item_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No items are available.</p>
+{% endif %}

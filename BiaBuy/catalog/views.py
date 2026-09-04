@@ -1,10 +1,13 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 from .models import Item
 
-def index(request):
-    catalog = Item.objects.all()
-    output = ", ".join([Item.item_name for Item in catalog])
-    return HttpResponse("Products: %s" % output)
+def catalog_page_sorted(request):
+    sorted_catalog = Item.objects.order_by("-item_price")
+    context = {"sorted_catalog": sorted_catalog}
+    return render(request, "catalog/index.html", context)
 
-def product(request, item_name):
-    return HttpResponse("Product: %s" % item_name)
+def item_page(request, item_name_url):
+    item = Item.objects.get(item_name=item_name_url)
+    context = {"item": item}
+    return render(request, "catalog/item_page.html", context)
+
