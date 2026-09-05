@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 
-{% if sorted_catalog %}
 {% block content %}
+{% if sorted_catalog %}
 
 <h2>Products:</h2>
 
 <dl style="margin-left:10px">
 {% for item in sorted_catalog %}
-    <dt style="font-size:large" class="col"><a href="/catalog/{{ item.item_name }}/">{{ item.item_name }}</a></dt>
+    <dt style="font-size:large"><a href="/catalog/{{ item.item_name }}/">{{ item.item_name }}</a></dt>
         <dd><p style="color:darkgrey"> €{{item.item_price}}</p></dd>
     <br>
 {% endfor %}
 </dl>
 
-{% endblock %}
+
 {% else %}
     <p>No items are available.</p>
 {% endif %}
+{% endblock %}

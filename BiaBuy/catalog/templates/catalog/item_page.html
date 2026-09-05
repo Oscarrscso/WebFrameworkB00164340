@@ -3,4 +3,8 @@
     <h3>{{ item.item_name }}</h3> 
     <p>{{ item.item_desc }}</p> 
     <p>€{{ item.item_price }}</p>
+    <form action="/cart/add/{{ item.id }}/" method="POST">
+        {%csrf_token%}
+        <button type="submit">Add to cart</button>
+    </form>
 {% endblock %}
