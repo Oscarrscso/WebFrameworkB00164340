@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Log In</h2>
+
+<form method="POST">
+    {%csrf_token%}
+    {{login_form.as_p}}
+    <div class="d-flex gap-2">
+        <button 
+        type="submit" 
+        class="btn btn-outline-success btn-sm"
+        style="width:70px">
+        Log In
+        </button>
+        <a  
+        class="btn btn-outline-secondary btn-sm"
+        href="/accounts/signup"
+        style="width:70px">
+        Sign Up
+        </a>
+    </div>
+</form>
+{% endblock %}

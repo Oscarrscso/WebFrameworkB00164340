@@ -3,8 +3,19 @@
     <h3>{{ item.item_name }}</h3> 
     <p>{{ item.item_desc }}</p> 
     <p>€{{ item.item_price }}</p>
-    <form action="/cart/add/{{ item.id }}/" method="POST">
+    {% if user.is_authenticated %}
+        <form action="/cart/add/{{ item.id }}/" method="POST">
         {%csrf_token%}
-        <button type="submit">Add to cart</button>
-    </form>
+        <button 
+        type="submit" 
+        class="btn btn-outline-success btn-sm">
+        Add to cart
+        </button>
+        {% else %}
+        <a 
+        class="btn btn-outline-secondary btn-sm" 
+        href="/accounts/login"><!--sends to login if loggedout-->
+        Add to cart
+        </a>
+    {%endif%}
 {% endblock %}

@@ -8,7 +8,27 @@
 <dl style="margin-left:10px">
 {% for item in sorted_catalog %}
     <dt style="font-size:large"><a href="/catalog/{{ item.item_name }}/">{{ item.item_name }}</a></dt>
-        <dd><p style="color:darkgrey"> €{{item.item_price}}</p></dd>
+        <dd style="margin: 0;">
+            <p style="color:darkgrey; margin-bottom: 0;"> €{{item.item_price}}</p>
+        </dd>
+        <dd>
+            {% if user.is_authenticated %}
+            <form action="/cart/add/{{ item.id }}/" method="POST">
+                {%csrf_token%}
+                <button 
+                type="submit" 
+                class="btn btn-outline-success btn-sm">
+                Add to cart
+                </button>
+                {% else %}
+                <a 
+                class="btn btn-outline-secondary btn-sm" 
+                href="/accounts/login"> <!--sends to login if loggedout-->
+                Add to cart
+                </a>
+                {%endif%}
+            </form>
+        </dd>    
     <br>
 {% endfor %}
 </dl>

@@ -4,9 +4,12 @@ from .models import Cart, CartItem
 
 # Create your views here.
 def cart(request):
+ if request.user.is_authenticated:
     user_cart = CartItem.objects.filter(cart__user=request.user)
     context = {"user_cart": user_cart}
     return render(request, "cart/index.html", context)
+ else:
+    return redirect("signup")
 
 def add_to_cart(request, item_id):
     if request.method == "POST":
