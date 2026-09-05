@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if user_orders %}
+<h2>Order History:</h2>
+<br>
+
+{% for order in user_orders %}
+    <h3>Order {{order.id}}:</h3>
+    <p>Date: {{order.date_created}}</p>
+    <p>Status: {{order.status}}</p>
+
+<dl style="margin-left:10px">
+    {% for order_item in order.order_items %}
+    <dt style="font-size:large">
+        {{ order_item.item_name }} 
+    </dt>
+        <dd>
+            <p>
+                Price: €{{order_item.item_price}} 
+                 | Quantity:{{order_item.quantity}}
+                 | Item Total: €{{order_item.item_total}}
+            </p>
+{% endfor %}
+         <dd>
+            <p style="font-size:x-large">Order total: €{{order.order_total}}</p>
+        </dd>
+        <hr>
+        <br>
+</dl>
+{% endfor %}
+{% else %}
+    <p>No Orders.</p>
+{% endif %}
+{% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login,logout
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import Group
+from cart.models import Cart
 # Create your views here.
 
 
@@ -12,6 +13,7 @@ def signup_page(request):
         if signup_form.is_valid():
             group = Group.objects.get(name="Customer")
             user = signup_form.save()
+            Cart.objects.create(user=user)
             user.groups.add(group)
             login(request, user)
             return redirect("catalog_page_sorted")
