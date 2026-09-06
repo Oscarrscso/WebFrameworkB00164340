@@ -1,2 +1,10 @@
 python3.13 manage.py migrate
 python3.13 manage.py loaddata data.json
+
+
+admin - passwordadmin
+
+(user) user1 - password 
+(staff) user2 - password
+(manager) user3 - password
+
