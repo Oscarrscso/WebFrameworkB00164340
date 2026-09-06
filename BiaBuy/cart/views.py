@@ -8,6 +8,8 @@ def cart(request):
     user_cart = CartItem.objects.filter(cart__user=request.user)
     cart_total = 0
 
+    
+    #calculate each items total and add to order total
     for cart_item in user_cart:
         cart_item.item_total = cart_item.item.item_price * cart_item.quantity
         cart_total += cart_item.item_total

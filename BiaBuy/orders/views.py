@@ -11,7 +11,9 @@ def orders(request):
             user_orders = Order.objects.all().order_by("-date_created")
         else: # or just users if customer
             user_orders = Order.objects.filter(user=request.user).order_by("-date_created")
-            
+
+
+        #calculate each items total and add to order total
         for order in user_orders:
             order.order_items = OrderItem.objects.filter(order=order)
             order.order_total = 0
@@ -25,21 +27,22 @@ def orders(request):
     else:
         return redirect("login")
 
+
 def place_order(request):
     if request.user.is_authenticated:
         if request.method == "POST":
 
             cart_items = CartItem.objects.filter(cart__user=request.user)
-        if cart_items:
-            new_order = Order.objects.create(user=request.user)
-            for cart_item in cart_items:
-                OrderItem.objects.create(
-                    order=new_order, 
-                    item=cart_item.item,
-                    item_name=cart_item.item.item_name,
-                    item_price=cart_item.item.item_price,
-                    quantity=cart_item.quantity,
-                    )
+            if cart_items:
+                new_order = Order.objects.create(user=request.user)
+                for cart_item in cart_items:
+                    OrderItem.objects.create(
+                        order=new_order, 
+                        item=cart_item.item,
+                        item_name=cart_item.item.item_name,
+                        item_price=cart_item.item.item_price,
+                        quantity=cart_item.quantity,
+                        )       
             
             cart_items.delete()
 
@@ -47,6 +50,7 @@ def place_order(request):
         return redirect("cart")
     else:
         return redirect("login")
+
 
 def order_return(request, order_id):
     if request.user.is_authenticated:
@@ -58,6 +62,7 @@ def order_return(request, order_id):
         return redirect("orders")
     else:
         return redirect("login")
+
 
 def manage_returns(request):
     if request.user.is_authenticated:
