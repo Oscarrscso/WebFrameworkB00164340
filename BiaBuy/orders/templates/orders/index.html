@@ -8,7 +8,13 @@
 {% for order in user_orders %}
     <h3>Order {{order.id}}:</h3>
     <p>Date: {{order.date_created}}</p>
-    <p>Status: {{order.status}}</p>
+    {% if order.status == "Refund Requested" %}
+        <p style="color: red;">Status: {{order.status}}</p>
+    {% elif order.status == "Refunded"%}
+        <p style="color: orange;">Status: {{order.status}}</p>
+    {% else %}
+        <p style="color: green">Status: {{order.status}}</p>
+    {% endif %}
 
 <dl style="margin-left:10px">
     {% for order_item in order.order_items %}
@@ -21,12 +27,26 @@
                  | Quantity:{{order_item.quantity}}
                  | Item Total: €{{order_item.item_total}}
             </p>
-{% endfor %}
+    {% endfor %}
          <dd>
             <p style="font-size:x-large">Order total: €{{order.order_total}}</p>
         </dd>
+        {% if is_staff %}
+        <form action="/orders/refund/" method="POST">
+        {%csrf_token%}
+            <input type="hidden" name="order_id" value="{{order.id}}">
+                <button type="submit" class="btn btn-dark btn-sm">
+                    Refund</button>
+            </form>
+        {% else %}
+            <form action="/orders/return/{{order.id}}/" method="POST">
+        {%csrf_token%}
+            <button type="submit" class="btn btn-outline-secondary btn-sm">
+                Request Refund</button>
+        </form>
+        {% endif %}
         <hr>
-        <br>
+    <br>
 </dl>
 {% endfor %}
 {% else %}

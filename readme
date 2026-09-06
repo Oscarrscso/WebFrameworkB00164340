@@ -1,0 +1,2 @@
+python3.13 manage.py migrate
+python3.13 manage.py loaddata data.json
